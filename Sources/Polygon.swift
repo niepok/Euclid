@@ -654,7 +654,8 @@ internal extension Array where Element == Polygon {
     mutating func addPoint(
         _ point: Vector,
         material: Polygon.Material?,
-        verticesByPosition: [Vector: [(faceNormal: Vector, Vertex)]]
+        verticesByPosition: [Vector: [(faceNormal: Vector, Vertex)]],
+        shouldAssert: Bool = true
     ) {
         var facing = [Polygon](), coplanar = [Vector: [Polygon]]()
         loop: for (i, polygon) in enumerated().reversed() {
@@ -700,7 +701,9 @@ internal extension Array where Element == Polygon {
                     faceNormal: faceNormal,
                     material: material
                 ) else {
-//                    assertionFailure()
+                    if shouldAssert {
+                        assertionFailure()
+                    }
                     continue
                 }
                 append(triangle)

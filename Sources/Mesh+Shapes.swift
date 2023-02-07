@@ -668,11 +668,13 @@ public extension Mesh {
     ///   - material: An optional material to apply to the mesh.
     static func convexHull<T: Sequence>(
         of points: T,
-        material: Material? = nil
+        material: Material? = nil,
+        shouldAssert: Bool = true
     ) -> Mesh where T.Element == Vector {
         convexHull(
             of: Dictionary(points.map { ($0, []) }, uniquingKeysWith: { $1 }),
-            material: material
+            material: material,
+            shouldAssert: shouldAssert
         )
     }
 
@@ -735,7 +737,8 @@ private extension Mesh {
 
     static func convexHull(
         of verticesByPosition: [Vector: [(faceNormal: Vector, Vertex)]],
-        material: Material?
+        material: Material?,
+        shouldAssert: Bool = true
     ) -> Mesh {
         var points = verticesByPosition.keys.sorted()
         var polygons = [Polygon]()
@@ -769,7 +772,8 @@ private extension Mesh {
             polygons.addPoint(
                 point,
                 material: material,
-                verticesByPosition: verticesByPosition
+                verticesByPosition: verticesByPosition,
+                shouldAssert: shouldAssert
             )
         }
         return Mesh(
