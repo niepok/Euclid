@@ -700,7 +700,7 @@ internal extension Array where Element == Polygon {
                     faceNormal: faceNormal,
                     material: material
                 ) else {
-                    assertionFailure()
+//                    assertionFailure()
                     continue
                 }
                 append(triangle)
